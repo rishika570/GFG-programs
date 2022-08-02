@@ -1,0 +1,60 @@
+// { Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+public class GfG
+{
+    public static void main(String args[])
+        {
+            Scanner sc = new Scanner(System.in);
+            int t = sc.nextInt();
+            while(t-->0)
+                {
+                    int n;
+                    n = sc.nextInt();
+                    ArrayList<String> arr = new ArrayList<String>();
+                    for(int i = 0;i<n;i++)
+                        {
+                            String p = sc.next();
+                            arr.add(p);
+                        }
+                    String line = sc.next();
+                    Sol obj = new Sol();  
+                    System.out.println(obj.wordBreak(line,arr));  
+                    
+                }
+        }
+}// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Sol
+{ public static boolean sol(String A,ArrayList<String> B,HashMap<String,Boolean> hm){
+    if(A.length()==0){
+    return true;}
+    if(hm.containsKey(A))
+    return hm.get(A);
+    boolean flag=false;
+    for(int i=0;i<A.length();i++){
+        String left=A.substring(0,i+1);
+        String right=A.substring(i+1);
+        if(B.contains(left)){
+            if(sol(right,B,hm)){
+                flag=true;
+                break;
+            }
+        }
+    }
+    hm.put(A,flag);
+    return flag;
+}
+    public static int wordBreak(String A, ArrayList<String> B )
+    {HashMap<String,Boolean> hm=new HashMap<>();
+    if(sol(A,B,hm))
+    return 1;
+    return 0;
+        //code here
+    }
+}
