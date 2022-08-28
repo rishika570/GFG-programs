@@ -1,0 +1,78 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.util.*; 
+import java.io.*;
+import java.lang.*;
+
+class GFG
+{
+	public static void main(String[] args) 
+	{ 
+	    Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        
+        while (t-- > 0)
+        {
+            int n = sc.nextInt();
+            int m = sc.nextInt();
+            int[][] matrix = new int[n][m];
+            
+            for (int i = 0; i < n; i++)
+                for (int j = 0; j < m; j++)
+                    matrix[i][j] = sc.nextInt();
+            
+            Solution ob = new Solution();
+            ob.diagonalSort(matrix,n,m);
+            printMatrix (matrix);
+        }
+	} 
+	
+	static void printMatrix(int arr[][]) 
+	{ 
+		for (int i = 0; i < arr.length; i++) { 
+			for (int j = 0; j < arr[0].length; j++) 
+				System.out.print(arr[i][j] + " "); 
+			System.out.println(""); 
+		} 
+	} 
+}
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution
+{
+    void diagonalSort(int matrix[][], int n, int m)
+    {
+        for(int i=1;i<n;i++){
+            int temp=i;
+            int j=0;
+            ArrayList<Integer> al=new ArrayList<>();
+            while(temp<n && j<m){
+                al.add(matrix[temp++][j++]);
+            }
+            Collections.sort(al);
+            temp=i;
+            j=0;
+            for(int k=0;k<al.size();k++){
+                matrix[temp++][j++]=al.get(k);
+            }
+        } 
+        for(int i=1;i<m;i++){
+            int temp=i;
+            int j=0;
+            ArrayList<Integer> al=new ArrayList<>();
+            while(temp<m && j<n){
+                al.add(matrix[j++][temp++]);
+            }
+             Collections.sort(al, Collections.reverseOrder());
+            temp=i;
+            j=0;
+            for(int k=0;k<al.size();k++){
+                matrix[j++][temp++]=al.get(k);
+            }
+        } 
+    }
+}
