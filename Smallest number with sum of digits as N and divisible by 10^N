@@ -1,0 +1,63 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+{
+    public static void main(String[] args) throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine().trim());
+        while(T-->0)
+        {
+            int n = Integer.parseInt(br.readLine().trim());
+            Solution ob = new Solution();
+            String ans = ob.digitsNum(n);
+            System.out.println(ans);           
+        }
+    }
+}
+
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution
+{
+    public String digitsNum(int N)
+    {  StringBuilder s=new StringBuilder();
+        int m=N/9;
+        int n=N%9;
+        //String s="";
+        String s1="";
+        long r=(long)Math.pow(10,N);
+        String s2="";
+        //s2=s2+"1";
+        int N1=N;
+        while(N1-->0){
+            s2=s2+"0";
+        }
+        int m1=m;
+        while(m1-->0){
+            s1=s1+"9";
+        }
+        if(N%9==0){
+          s.append(s1);
+        s.append(s2);  
+        }
+        else if(m>=1){
+        s.append(n);
+        s.append(s1);
+        s.append(s2);
+        }
+        else{
+      s.append(n);
+        s.append(s1);
+        s.append(s2);
+        }
+        return s.toString();
+    }
+}
