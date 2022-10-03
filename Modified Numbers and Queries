@@ -1,0 +1,60 @@
+//{ Driver Code Starts
+//Initial Template for Java
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+{
+    public static void main(String[] args) throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine().trim());
+        while(T-->0)
+        {
+            String[] input = new String[2]; 
+            input = br.readLine().split(" "); 
+            int l = Integer.parseInt(input[0]); 
+            int r = Integer.parseInt(input[1]); 
+            Solution ob = new Solution();
+            System.out.println(ob.sumOfAll(l,r));
+        }
+    }
+}
+
+// } Driver Code Ends
+
+
+//User function Template for Java
+class Solution
+{
+    public int sumOfAll(int l, int r)
+    { int sum=0;
+       for(int i=l;i<=r;i++){
+           int s=0;
+           if(isprime(i)){
+               s+=i;
+           }
+           else{
+          for(int j=2;j<i;j++){
+              if(i%j==0 && isprime(j)){
+                  s=s+j;
+              }
+          }
+           }
+          sum+=s;
+       }
+       return sum;
+    }
+    public boolean isprime(int n){
+        int c=0;
+        for(int i=2;i<n;i++){
+            if(n%i==0){
+                c++;
+            }
+        }
+        if(c==0){
+            return true;
+        }
+        return false;
+    }
+}
