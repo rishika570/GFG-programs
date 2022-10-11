@@ -1,0 +1,62 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+
+class GFG{
+    public static void main(String args[])throws IOException
+    {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out=new PrintWriter(System.out);
+        int t = Integer.parseInt(in.readLine());
+        while(t-- > 0){
+            String s = in.readLine();
+            
+            Solution ob = new Solution();
+            out.println(ob.decodedString(s));
+        }
+        out.close();
+    }
+}
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution{
+    static int i; 
+    static String decodedString(String s){
+        i=0;
+        return getString(s);
+    }
+    static String getString(String s){
+        StringBuilder sb=new StringBuilder();
+        while(i<s.length()){
+            if(s.charAt(i)>='0' && s.charAt(i)<='9'){
+                int n=0;
+                while(s.charAt(i)>='0' && s.charAt(i)<='9'){
+                    n=n*10+(s.charAt(i)-'0');
+                    i++;
+                }
+                i++;
+                String nextstr=getString(s);
+                while(n>0){
+                    sb.append(nextstr);
+                    n--;
+                }
+            }
+            else{
+                if(s.charAt(i)==']'){
+                    i++;
+                    return sb.toString();
+                }
+                else{
+                    sb.append(""+s.charAt(i));
+                    i++;
+                }
+            }
+        }
+        return sb.toString();
+    }
+}
