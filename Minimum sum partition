@@ -1,0 +1,56 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+class GfG
+{
+    public static void main(String args[])
+        {
+            Scanner sc = new Scanner(System.in);
+            int t = sc.nextInt();
+            while(t-->0)
+                {
+                    int n = sc.nextInt();
+                    int A[] = new int[n];
+                    for(int i = 0;i<n;i++)
+                        A[i] = sc.nextInt();
+                    Solution ob = new Solution();
+                    System.out.println(ob.minDifference(A,n));
+                }
+        }
+}    
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution
+{
+
+	public int minDifference(int arr[], int n) 
+	{   
+	    int sum=0;
+	    int addsum=0;
+	    for(int i=0;i<n;i++){
+	        sum+=arr[i];
+	    }
+	    int dp[][]=new int[n][sum];
+	    for(int i=0;i<n;i++){
+	        Arrays.fill(dp[i],-1);
+	    }
+	    int ans=solve(sum,addsum,0,arr,dp);
+	    return ans;
+	} 
+	public int solve(int sum,int addsum,int i,int[] arr,int dp[][]){
+	    if(i==arr.length){
+	        return Math.abs(sum-addsum);
+	    }
+	    if(dp[i][addsum]!=-1){
+	        return dp[i][addsum];
+	    }
+	    int x=solve(sum-arr[i],addsum+arr[i],i+1,arr,dp);
+	    int y=solve(sum,addsum,i+1,arr,dp);
+	    return dp[i][addsum]=Math.min(x,y);
+	}
+}
