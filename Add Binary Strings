@@ -1,0 +1,56 @@
+// { Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+
+class GFG {
+    public static void main(String args[]) throws IOException {
+        BufferedReader read =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(read.readLine());
+        while (t-- > 0) {
+            
+            String input[] = read.readLine().split(" ");
+            String a = input[0];
+            String b = input[1];
+            Solution ob = new Solution();
+            System.out.println(ob.addBinary(a,b));
+        }
+    }
+}// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution {
+    String addBinary(String A, String B) {
+        StringBuilder s=new StringBuilder();
+        int m=A.length()-1;
+        int n=B.length()-1;
+        int carry=0;
+        while(m>=0 || n>=0 || carry>0){
+           
+            char c='0';
+            char d='0';
+            if(m>=0){
+           c=A.charAt(m);
+            m--;}
+            if(n>=0){
+      d=B.charAt(n);
+            n--;}
+           int sum=Character.getNumericValue(c)+Character.getNumericValue(d)+carry;
+            carry=sum/2;
+            s.append(sum%2);
+    }
+    
+    int i=s.length()-1;
+    
+    while(s.charAt(i)!='1'){
+        s.deleteCharAt(i);
+        i--;
+    }
+    
+        return s.reverse().toString();
+    }
+}
