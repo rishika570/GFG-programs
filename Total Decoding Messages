@@ -1,0 +1,61 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+{
+    public static void main(String[] args) throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        PrintWriter out=new PrintWriter(System.out);
+        int T = Integer.parseInt(br.readLine().trim());
+        while(T-->0)
+        {
+            String str = br.readLine().trim();
+            Solution ob = new Solution();
+            int ans = ob.CountWays(str);
+            out.println(ans);
+        }
+        out.close();
+    }
+}
+
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution
+{
+    public int CountWays(String str)
+    {  int[] dp=new int[str.length()];
+    Arrays.fill(dp,-1);
+       return count(str.toCharArray(),0,str.length(),dp);
+    }
+    int mod=1000000007;
+    public int count(char[] s,int idx,int len,int[] dp){
+        if(idx==len){
+            return 1;
+        }
+        if(idx>len){
+            return 0;
+        }
+        if(s[idx]=='0'){
+            return 0;
+        }
+        if(dp[idx]!=-1){
+            return dp[idx];
+        }
+        int one=count(s,idx+1,len,dp);
+        int two=0;
+        if(idx+1<len){
+            int twodigit=(s[idx]-'0')*10+(s[idx+1]-'0');
+            if(twodigit<=26){
+                two=count(s,idx+2,len,dp);
+            }
+        }
+        return dp[idx]=(one+two)%mod;
+    }
+}
