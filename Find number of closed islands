@@ -1,0 +1,70 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+class GFG
+{
+    public static void main(String[] args) throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine().trim());
+        while(T-->0)
+        {
+            String[] str = br.readLine().trim().split(" ");
+            int N = Integer.parseInt(str[0]);
+            int M = Integer.parseInt(str[1]);
+            int[][] matrix = new int[N][M];
+            for(int i=0; i<N; i++)
+            {
+                String[] s = br.readLine().trim().split(" ");
+                for(int j=0; j<M; j++)
+                    matrix[i][j] = Integer.parseInt(s[j]);
+            }
+            
+            Solution obj = new Solution();
+            System.out.println(obj.closedIslands(matrix, N, M));
+        }
+    }
+}
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution
+{
+    public int closedIslands(int[][] grid, int N, int M)
+    {
+                if (grid.length < 3 || grid[0].length < 3) {
+            return 0;
+        }
+        int count=0;
+        //int vis[][]=new int[grid.length][grid[0].length];
+        for(int i=1;i<grid.length-1;i++){
+            for(int j=1;j<grid[0].length-1;j++){
+                if(grid[i][j]==1){
+                    if(island(grid,i,j)){
+                        count++;
+                    }
+                }
+            }
+        }
+        return count;
+    }
+    public boolean island(int[][] grid,int i,int j){
+        if(grid[i][j]==0 || grid[i][j]==-1){
+            return true;
+        }
+        if(i==0 || i==grid.length-1 || j==0 || j==grid[0].length-1){
+            return false;
+        }
+        grid[i][j]=-1;
+        boolean left=island(grid,i,j-1);
+        boolean top=island(grid,i-1,j);
+        boolean right=island(grid,i,j+1);
+        boolean bottom=island(grid,i+1,j);
+        return left && top && right && bottom;
+    }
+}
