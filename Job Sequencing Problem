@@ -1,0 +1,71 @@
+//{ Driver Code Starts
+import java.io.*;
+import java.lang.*;
+import java.util.*;
+
+class Job {
+    int id, profit, deadline;
+    Job(int x, int y, int z){
+        this.id = x;
+        this.deadline = y;
+        this.profit = z; 
+    }
+}
+
+class GfG {
+    public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        //testcases
+		int t = Integer.parseInt(br.readLine().trim());
+		while(t-->0){
+            String inputLine[] = br.readLine().trim().split(" ");
+            
+            //size of array
+            int n = Integer.parseInt(inputLine[0]);
+            Job[] arr = new Job[n];
+            inputLine = br.readLine().trim().split(" ");
+            
+            //adding id, deadline, profit
+            for(int i=0, k=0; i<n; i++){
+                arr[i] = new Job(Integer.parseInt(inputLine[k++]), Integer.parseInt(inputLine[k++]), Integer.parseInt(inputLine[k++]));
+            }
+            
+            Solution ob = new Solution();
+            
+            //function call
+            int[] res = ob.JobScheduling(arr, n);
+            System.out.println (res[0] + " " + res[1]);
+        }
+    }
+}
+// } Driver Code Ends
+
+
+class Solution
+{
+    //Function to find the maximum profit and the number of jobs done.
+    int[] JobScheduling(Job arr[], int n)
+    {
+        Arrays.sort(arr,(a,b)->a.profit==b.profit?b.deadline-a.deadline:b.profit-a.profit);
+        int maxdead=0;
+        for(int i=0;i<n;i++){
+            maxdead=Math.max(maxdead,arr[i].deadline);
+        }
+        boolean[] find=new boolean[maxdead+1];//one slot can be provided once
+        int pcount=0,jcount=0;
+        for(int i=0;i<n;i++){
+            Job curr=arr[i];
+            int currD=curr.deadline;
+            while(currD>0 && find[currD]){
+                currD--;
+            }
+            if(currD>0){
+                find[currD]=true;
+                pcount+=curr.profit;
+                jcount++;
+            }
+        }
+        return new int[]{jcount,pcount};
+    }
+}
