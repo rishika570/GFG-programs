@@ -1,0 +1,56 @@
+//{ Driver Code Starts
+import java.util.*;
+
+class Distinct_Occurrences
+{
+	public static void main(String args[])
+	{
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+		sc.nextLine();
+		while(t>0)
+		{
+			String line = sc.nextLine();
+			String S = line.split(" ")[0];
+			String T = line.split(" ")[1];
+			
+			Solution ob = new Solution();
+			System.out.println(ob.subsequenceCount(S,T));
+			t--;
+		}
+	}
+}
+// } Driver Code Ends
+
+
+/*You are required to complete this method*/
+
+class Solution
+{  int mod=1000000007;
+    int  subsequenceCount(String s, String t)
+    {
+	  int dp[][]=new int[t.length()+1][s.length()+1];
+        for(int[] r:dp){
+            Arrays.fill(r,-1);
+        }
+        return solve(s,t,0,0,dp);
+    }
+    public int solve(String s,String t,int i,int j,int[][] dp){
+        if(i==t.length()){
+            return 1;
+        }
+        if(j==s.length()){
+           return 0; 
+        }
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        int inc=0,exc=0;
+        if(s.charAt(j)==t.charAt(i)){
+           inc=solve(s,t,i+1,j+1,dp)%mod; 
+        }
+        exc=solve(s,t,i,j+1,dp)%mod;
+        dp[i][j]=inc+exc;
+        return dp[i][j]%mod;
+    }	
+}
