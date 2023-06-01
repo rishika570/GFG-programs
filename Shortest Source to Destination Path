@@ -1,0 +1,73 @@
+//{ Driver Code Starts
+// Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+class GFG {
+    public static void main(String args[]) throws IOException {
+        BufferedReader read =
+            new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(read.readLine());
+        while (t-- > 0) {
+            int N, M, x, y;
+            String S[] = read.readLine().split(" ");
+            N = Integer.parseInt(S[0]);
+            M = Integer.parseInt(S[1]);
+            int a[][] = new int[N][M];
+            for (int i = 0; i < N; i++) {
+                String s[] = read.readLine().split(" ");
+                for (int j = 0; j < M; j++) a[i][j] = Integer.parseInt(s[j]);
+            }
+            String s1[] = read.readLine().split(" ");
+            x = Integer.parseInt(s1[0]);
+            y = Integer.parseInt(s1[1]);
+            Solution ob = new Solution();
+            System.out.println(ob.shortestDistance(N, M, a, x, y));
+        }
+    }
+}
+// } Driver Code Ends
+
+
+// User function Template for Java
+
+class Solution {
+    int shortestDistance(int N, int M, int grid[][], int X, int Y) {
+        if(grid[0][0]==0){
+            return -1;
+        }
+        Queue<Pair> q=new LinkedList<>();
+        boolean[][] vis=new boolean[grid.length][grid[0].length];
+        q.add(new Pair(0,0,0));
+        vis[0][0]=true;
+        int drow[]={-1,0,1,0};
+        int dcol[]={0,1,0,-1};
+        while(!q.isEmpty()){
+            Pair curr=q.poll();
+            int ans=curr.res;
+            if(curr.row==X && curr.col==Y){
+                return ans;
+            }
+            for(int i=0;i<4;i++){
+                int nrow=curr.row+drow[i];
+                int ncol=curr.col+dcol[i];
+                if(nrow>=0 && nrow<grid.length && ncol>=0 && ncol<grid[0].length && grid[nrow][ncol]==1 && !vis[nrow][ncol]){
+                    vis[nrow][ncol]=true;
+                    q.add(new Pair(nrow,ncol,ans+1));
+                }
+            }
+        }
+        return -1;
+    }
+}
+class Pair{
+    int row;
+    int col;
+    int res;
+    Pair(int row,int col,int res){
+        this.row=row;
+        this.col=col;
+        this.res=res;
+
+    }
+};
