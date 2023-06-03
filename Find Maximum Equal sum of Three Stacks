@@ -1,0 +1,96 @@
+//{ Driver Code Starts
+import java.io.*;
+import java.util.*;
+
+
+class IntArray
+{
+    public static int[] input(BufferedReader br, int n) throws IOException
+    {
+        String[] s = br.readLine().trim().split(" ");
+        int[] a = new int[n];
+        for(int i = 0; i < n; i++)
+            a[i] = Integer.parseInt(s[i]);
+        
+        return a;
+    }
+    
+    public static void print(int[] a)
+    {
+        for(int e : a)
+            System.out.print(e + " ");
+        System.out.println();
+    }
+    
+    public static void print(ArrayList<Integer> a)
+    {
+        for(int e : a)
+            System.out.print(e + " ");
+        System.out.println();
+    }
+}
+
+class GFG {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t;
+        t = Integer.parseInt(br.readLine());
+        while(t-- > 0){
+            
+            int[] a = IntArray.input(br, 3);
+            
+            
+            int[] S1 = IntArray.input(br, a[0]);
+            
+            
+            int[] S2 = IntArray.input(br, a[1]);
+            
+            
+            int[] S3 = IntArray.input(br, a[2]);
+            
+            Solution obj = new Solution();
+            int res = obj.maxEqualSum(a[0],a[1],a[2], S1, S2, S3);
+            
+            System.out.println(res);
+            
+        }
+    }
+}
+
+// } Driver Code Ends
+
+
+class Solution {
+    public static int maxEqualSum(int N1,int N2,int N3, int[] S1, int[] S2, int[] S3) {
+        int a=0,b=0,c=0;
+        for(int i:S1){
+            a+=i;
+        }
+        for(int j:S2){
+            b+=j;
+        }
+        for(int k:S3){
+            c+=k;
+        }
+        int ind1=0,ind2=0,ind3=0;
+        while(ind1<N1 && ind2<N2 && ind3<N3){
+            if(a==b && b==c){
+                return a;
+            }
+            else if(a>=b && a>=c){
+                a-=S1[ind1];
+                ind1++;
+            }
+            else if(b>=c && b>=a){
+                b-=S2[ind2];
+                ind2++;
+            }
+            else{
+                c-=S3[ind3];
+                ind3++;
+            }
+        }
+        return 0;
+    }
+}
+        
