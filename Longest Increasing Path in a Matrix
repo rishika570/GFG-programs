@@ -1,0 +1,58 @@
+//{ Driver Code Starts
+// Initial Template for Java
+
+import java.util.*;
+
+class GFG {
+    public static void main(String args[]) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        while (t > 0) {
+            int n = sc.nextInt();
+            int m = sc.nextInt();
+            int arr[][] = new int[n][m];
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < m; j++) {
+                    arr[i][j] = sc.nextInt();
+                }
+            }
+            Solution ob = new Solution();
+            System.out.println(ob.longestIncreasingPath(arr, n, m));
+            t--;
+        }
+    }
+}
+// } Driver Code Ends
+
+
+// User function Template for Java
+
+class Solution {
+    /*You are required to complete this method*/
+    int longestIncreasingPath(int grid[][], int n, int m) {
+        int res=0;
+        int[][] dp=new int[n+1][m+1];
+        for(int[] r:dp){
+            Arrays.fill(r,-1);
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                res=Math.max(res,solve(i,j,grid,-1,dp));
+            }
+        }
+        return res;
+    }
+    public int solve(int i,int j,int[][] grid,int prev,int[][] dp){
+        if(i<0 || i>=grid.length || j<0 || j>=grid[0].length || grid[i][j]<=prev){
+            return 0;
+        }
+        if(dp[i][j]!=-1){
+            return dp[i][j];
+        }
+        int l=solve(i,j-1,grid,grid[i][j],dp);
+        int r=solve(i,j+1,grid,grid[i][j],dp);
+        int t=solve(i-1,j,grid,grid[i][j],dp);
+        int b=solve(i+1,j,grid,grid[i][j],dp);
+        return dp[i][j]=(Math.max(l,Math.max(r,Math.max(t,b))))+1;
+    }
+}
