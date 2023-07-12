@@ -1,0 +1,84 @@
+//{ Driver Code Starts
+// Initial Template for Java
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+// Position this line where user code will be pasted.
+
+class GFG {
+    public static void main(String[] args) throws IOException {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        while (T-- > 0) {
+            int V = sc.nextInt();
+            int E = sc.nextInt();
+
+            List<List<Integer>> adj = new ArrayList<>();
+
+            for (int i = 0; i < V; i++) {
+                adj.add(new ArrayList<>());
+            }
+            for (int i = 0; i < E; i++) {
+                int u = sc.nextInt();
+                int v = sc.nextInt();
+
+                adj.get(u).add(v);
+            }
+
+            Solution obj = new Solution();
+            List<Integer> safeNodes = obj.eventualSafeNodes(V, adj);
+            for (int i : safeNodes) {
+                System.out.print(i + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+// } Driver Code Ends
+
+
+// User function Template for Java
+
+class Solution {
+
+    List<Integer> eventualSafeNodes(int V, List<List<Integer>> graph) {
+
+       int[] vis=new int[graph.size()];
+        int[] pathvis=new int[graph.size()];
+        int[] check=new int[graph.size()];
+        List<Integer> list=new ArrayList<>();
+        for(int i=0;i<graph.size();i++){
+            if(vis[i]==0){
+            dfs(i,vis,pathvis,graph,check);
+            }
+        }
+            for(int i=0;i<graph.size();i++){
+                if(check[i]==1){
+                    list.add(i);
+                }
+            }
+        return list;
+    }
+    public boolean dfs(int i,int[] vis,int[] pathvis,List<List<Integer>> graph,int[] check){
+        vis[i]=1;
+        pathvis[i]=1;
+        check[i]=0;
+        for(int node:graph.get(i)){
+            if(vis[node]==0){
+                if(dfs(node,vis,pathvis,graph,check)==true){
+                    check[node]=0;
+                    return true;
+                }
+            }
+            else if(pathvis[node]==1){
+                check[node]=0;
+                return true;
+            }
+        }
+        check[i]=1;
+        pathvis[i]=0;
+        return false;
+    }
+}
