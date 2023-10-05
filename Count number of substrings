@@ -1,0 +1,56 @@
+//{ Driver Code Starts
+//Initial Template for Java
+
+import java.io.*;
+import java.util.*;
+class GfG
+{
+    public static void main (String[] args)
+    {
+        
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        
+        while(t-- > 0)
+        {
+            String s = sc.next ();
+            int k = sc.nextInt();
+    		System.out.println (new Solution().substrCount (s, k));
+        }
+        
+    }
+}
+// } Driver Code Ends
+
+
+//User function Template for Java
+
+class Solution
+{
+    long substrCount (String S, int K) {
+       return solve(S,K)-solve(S,K-1); 
+    }
+    long solve(String S,int k){
+    int[] f=new int[26];
+        int si=0,ei=0;
+        long count=0;
+        int dc=0;
+        int n=S.length();
+        while(ei<n){
+            f[S.charAt(ei)-'a']++;
+            if(f[S.charAt(ei)-'a']==1){
+                dc++;
+            }
+            while(dc>k){
+               f[S.charAt(si)-'a']--;
+               if(f[S.charAt(si)-'a']==0){
+                   dc--;
+               }
+               si++;
+            }
+            ei++;
+            count+=(ei-si+1);
+        }
+        return count;
+}
+}
