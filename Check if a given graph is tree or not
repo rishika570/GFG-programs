@@ -1,0 +1,73 @@
+//{ Driver Code Starts
+import java.io.*;
+import java.util.*;
+
+public class GFG {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int t=scanner.nextInt();
+        while(t-- > 0)
+        {
+            int n = scanner.nextInt();
+            int m = scanner.nextInt();
+    
+            ArrayList<ArrayList<Integer>> edges = new ArrayList<>();
+            for (int i = 0; i < m; i++) {
+                int u = scanner.nextInt();
+                int v = scanner.nextInt();
+                ArrayList<Integer> edge = new ArrayList<>();
+                edge.add(u);
+                edge.add(v);
+                edges.add(edge);
+            }
+    
+            Solution solution = new Solution();
+            boolean result = solution.isTree(n, m, edges);
+    
+            if (result==true) {
+                System.out.println(1);
+            } else {
+                System.out.println(0);
+            }
+        }
+    }
+}
+// } Driver Code Ends
+
+
+//User function Template for Java
+class Solution {
+    public boolean isTree(int n, int m, ArrayList<ArrayList<Integer>> edges) 
+    {
+        List<List<Integer>> list=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            list.add(new ArrayList<>());
+        }
+        for(int i=0;i<m;i++){
+            ArrayList<Integer> ll=edges.get(i);
+            list.get(ll.get(0)).add(ll.get(1));
+            list.get(ll.get(1)).add(ll.get(0));
+        }
+        Set<Integer> vis=new HashSet<>();
+        boolean f=solve(0,list,vis,-1);
+        if(vis.size()!=n){
+            return false;
+        }
+        return f;
+    }
+    public boolean solve(int node,List<List<Integer>> list,Set<Integer> vis,int p){
+        vis.add(node);
+        for(int nbr:list.get(node)){
+            if(!vis.contains(nbr)){
+                if(!solve(nbr,list,vis,node)){
+                    return false;
+                }
+            }
+            else if(p!=nbr){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
